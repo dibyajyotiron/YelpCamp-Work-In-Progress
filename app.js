@@ -10,7 +10,8 @@ var express = require("express"),
   Comment = require("./models/comment"),
   seedDB = require("./seeds"),
   methodOverride = require("method-override"),
-  flash = require("connect-flash");
+  flash = require("connect-flash"),
+  port = process.env.PORT || 3000;
 
 // mongoose.connect("mongodb://localhost/yelp_camp");
 mongoose.connect(
@@ -56,6 +57,6 @@ app.use(function(req, res, next) {
 app.use(indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
-app.listen(3000, function() {
+app.listen(port, function() {
   console.log("YelpCamp server has started!!");
 });
