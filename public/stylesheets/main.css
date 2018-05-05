@@ -1,0 +1,97 @@
+.thumbnail img {
+  width: 100%;
+  height: 50%;
+}
+@media only screen and (max-width: 767px) {
+  .thumbnail img {
+    width: 100%;
+    height: 70%;
+  }
+}
+@media only screen and (max-width: 540px) {
+  .thumbnail img {
+    width: 100%;
+    height: 63%;
+  }
+}
+
+.thumbnail .caption-full {
+  padding: 9px;
+}
+.thumbnail {
+  padding: 0;
+  height: 90%;
+}
+#delete-form {
+  display: inline;
+}
+
+.alert.alert-danger {
+  margin-bottom: 0;
+  position: absolute;
+  width: inherit;
+}
+i.fas.fa-info-circle {
+  color: #fff;
+}
+/*
+.alert.alert-info {
+  margin-bottom: 0;
+  position: absolute;
+  width: inherit;
+}
+.alert.alert-success {
+  margin-bottom: 0;
+  position: absolute;
+  width: inherit;
+} */
+/* #same-img {
+  height: 17vh;
+} */
+/* .same {
+  height: 35vh;
+} */
+/* body {
+  background: url("https://media.cntraveler.com/photos/598a25a0dbc4d64e78a474de/master/pass/Family-Camping_GettyImages-531284683.jpg")
+    no-repeat center center fixed;
+  background-size: cover;
+} */
+/* .well {
+}
+
+.list-group-item {
+}
+header.jumbotron.extra-jumbotron {
+}
+.navbar-default {
+} */
+.bg {
+  background: url("https://macascampingground.com.au/wp-content/uploads/2016/07/Camping-in-the-woods-uhd-wallpapers.jpg")
+      no-repeat center center fixed,
+    rgba(184, 212, 205, 0.54);
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+}
+header.jumbotron.extra-jumbotron {
+  margin-top: 25px;
+}
+.form-container {
+  border-radius: 8px;
+  padding: 40px 50px 50px 50px;
+  margin-top: 20vh;
+  -webkit-box-shadow: 9px 9px 49px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 9px 9px 49px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: 9px 9px 49px -7px rgba(0, 0, 0, 0.75);
+  background: rgba(238, 238, 238, 0.88);
+}
+
+input#exampleInputPassword1 {
+  margin-bottom: 30px;
+}
+nav.navbar.navbar-default {
+  margin-bottom: 0px;
+}
+.row {
+  margin-top: 2%;
+}

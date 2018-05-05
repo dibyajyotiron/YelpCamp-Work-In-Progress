@@ -1,110 +1,58 @@
-var express = require("express")
-var app = express()
-///////////////////////////////////////////
-var request = require("request")
-//////////////////////////////////////////
-var mongoose = require("mongoose")
-mongoose.connect("mongodb://localhost/yelp_camp")
-///////////////////////////////////////////
-var bodyParser = require("body-parser")
-app.use(bodyParser.urlencoded({extended: true}))
-///////////////////////////////////////////
-app.set("view engine","ejs")
-///////////////////////////////////////////
-var campSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-})
-var Campground = mongoose.model("Campground",campSchema)
-//////////////////////////////////////////
+var express = require("express"),
+  app = express(),
+  request = require("request"),
+  mongoose = require("mongoose"),
+  passport = require("passport"),
+  localStrategy = require("passport-local"),
+  User = require("./models/user"),
+  bodyParser = require("body-parser"),
+  Campground = require("./models/campgrounds"),
+  Comment = require("./models/comment"),
+  seedDB = require("./seeds"),
+  methodOverride = require("method-override"),
+  flash = require("connect-flash");
 
-//////////////////////////////////////////
-app.get("/",function(req,res){
-    res.render("landing")
-})
-app.get("/campgrounds",function(req,res){
-    Campground.find({},function(err,allCamps){
-        if(err){
-            console.log(err)
-        }
-        else{
-            res.render("index",{camps: allCamps})
-        }
-    })
-    
-})
-// Campground.create({
-//     name : "Heaven's garden", 
-//     image : "https://s3.amazonaws.com/imagescloud/images/medias/camping/camping-tente.jpg",
-//     description: "This is heaven's garden for you to explore."
-// },function(err,campground){
-//     if(err){
-//         console.log(err)
-//     }
-//     else{
-//         console.log("Camp created")
-//         console.log(campground)
-//     }
-// })
+mongoose.connect("mongodb://localhost/yelp_camp");
 
-app.post("/campgrounds",function(req,res){
-    var name = req.body.name
-    var image = req.body.image
-    var description = req.body.description
-    var newCampground = {name:name, image:image, description:description}
-    Campground.create(newCampground,function(err,newlyCreated){
-        if(err){
-            console.log(err)
-        }
-        else{
-            res.redirect("/campgrounds")
-        }
-    })
-    //campgrounds.push(newCampground)
-    
-})
-app.get("/campgrounds/new",function(req, res) { 
-    res.render("new")
-})
+//require routes
+var commentRoutes = require("./routes/comments"),
+  campgroundRoutes = require("./routes/campgrounds"),
+  indexRoutes = require("./routes/index");
 
-app.get("/campgrounds/:id",function(req,res){
-    Campground.findById(req.params.id,function(err, foundCamp){
-        if(err)
-        console.log(err)
-        else{
-            res.render("show",{campground: foundCamp})
-        }
-    })
-})
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+app.use(flash());
+app.locals.moment = require("moment");
+//seed the database
+//seedDB();
 
+//Passport Configuration
+app.use(
+  require("express-session")({
+    secret: "It is YelpCamp",
+    resave: false,
+    saveUninitialized: false
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////
-app.listen(3000, function(){
-    console.log("Yelpcamp server has started!!")
-})
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
+  res.locals.info = req.flash("info");
+  res.locals.warning = req.flash("warning");
+  next();
+});
+app.use(indexRoutes);
+app.use("/campgrounds", campgroundRoutes);
+app.use("/campgrounds/:id/comments", commentRoutes);
+app.listen(3000, function() {
+  console.log("YelpCamp server has started!!");
+});
