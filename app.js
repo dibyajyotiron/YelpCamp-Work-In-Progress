@@ -12,7 +12,10 @@ var express = require("express"),
   methodOverride = require("method-override"),
   flash = require("connect-flash");
 
-mongoose.connect("mongodb://localhost/yelp_camp");
+// mongoose.connect("mongodb://localhost/yelp_camp");
+mongoose.connect(
+  "mongodb://dibya_ww:12345@ds117010.mlab.com:17010/yelpcamp_dibya"
+);
 
 //require routes
 var commentRoutes = require("./routes/comments"),
