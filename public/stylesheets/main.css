@@ -34,6 +34,44 @@
 i.fas.fa-info-circle {
   color: #fff;
 }
+@media (max-width: 766px) {
+  .navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .input-group {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  .col-sm-6 {
+    width: 40%;
+  }
+}
+@media (min-width: 992px) {
+  .input-group {
+    margin-left: 0%;
+    margin-right: 0;
+    width: 400px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .input-group {
+    margin-left: 15%;
+    margin-right: 11%;
+  }
+}
+ul.nav.navbar-nav.navbar-right {
+  margin-right: -4%;
+  margin-left: 0;
+}
+form.navbar-form {
+  border: 0px;
+}
 /*
 .alert.alert-info {
   margin-bottom: 0;

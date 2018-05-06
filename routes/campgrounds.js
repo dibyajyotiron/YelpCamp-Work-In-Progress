@@ -3,17 +3,44 @@ var router = express.Router();
 var Campground = require("../models/campgrounds");
 var middleware = require("../middleware");
 
+// Search Regular Expression
+
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
 //INDEX - show all campgrounds
+
 router.get("/", function(req, res) {
-  Campground.find({}, function(err, allCamps) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("campground/index", {
-        camps: allCamps
-      });
-    }
-  });
+  var notFound = null;
+  if (req.query.search) {
+    const regex = new RegExp(escapeRegex(req.query.search), "gi"); //g is global, i is ignore case
+    Campground.find({ name: regex }, function(err, allCamps) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (allCamps.length < 1) {
+          notFound =
+            "Sorry, we could not find any matching result!! Try something else!";
+        }
+        res.render("campground/index", {
+          camps: allCamps,
+          notFound: notFound
+        });
+      }
+    });
+  } else {
+    Campground.find({}, function(err, allCamps) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("campground/index", {
+          camps: allCamps,
+          notFound: notFound
+        });
+      }
+    });
+  }
 });
 //CREATE ROUTE
 router.post("/", middleware.isLoggedIn, function(req, res) {
