@@ -41,7 +41,7 @@ router.post("/login", function(req, res, next) {
     failureRedirect: "/login",
     failureFlash: true,
     successFlash: ("success",
-    "Hey, " + req.body.username + ", welcome to YelpCamp!")
+    "Hey " + req.body.username + ", welcome to YelpCamp!")
   })(req, res);
 });
 // logout route
