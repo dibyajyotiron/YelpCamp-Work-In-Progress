@@ -10,7 +10,7 @@ middleObj.checkCampOwnership = function(req, res, next) {
       if (err) {
         req.flash("error", "Something unexpected happened!!");
         res.redirect("back");
-      } else if (found.author.id.equals(req.user._id)) {
+      } else if (found.author.id.equals(req.user._id) || req.user.isAdmin) {
         //found.author.id is a mongoose object and other one is a string
         next();
       } else {
@@ -34,7 +34,7 @@ middleObj.checkCommentOwnership = function(req, res, next) {
         req.flash("error", "Something unexpected happened!!");
         res.redirect("back");
       } else {
-        if (found.author.id.equals(req.user._id)) {
+        if (found.author.id.equals(req.user._id) || req.user.isAdmin) {
           //found.author.id is a mongoose object and other one is a string
           next();
         } else {

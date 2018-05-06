@@ -43,19 +43,19 @@ i.fas.fa-info-circle {
 }
 @media (max-width: 768px) {
   .input-group {
-    width: 100%;
+    width: 95%;
   }
 }
 @media (min-width: 768px) {
   .col-sm-6 {
-    width: 40%;
+    width: 35%;
   }
 }
 @media (min-width: 992px) {
   .input-group {
     margin-left: 0%;
     margin-right: 0;
-    width: 400px;
+    width: 80%;
   }
 }
 
