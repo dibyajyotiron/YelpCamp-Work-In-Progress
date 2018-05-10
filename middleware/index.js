@@ -7,9 +7,12 @@ var middleObj = {};
 middleObj.checkCampOwnership = function(req, res, next) {
   if (req.isAuthenticated()) {
     Campground.findById(req.params.id, function(err, found) {
-      if (err) {
-        req.flash("error", "Something unexpected happened!!");
-        res.redirect("back");
+      if (err || !found) {
+        req.flash(
+          "warning",
+          "The requested Campground doesn't exist anymore!!"
+        );
+        res.redirect("/campgrounds");
       } else if (found.author.id.equals(req.user._id) || req.user.isAdmin) {
         //found.author.id is a mongoose object and other one is a string
         next();
@@ -30,9 +33,9 @@ middleObj.checkCampOwnership = function(req, res, next) {
 middleObj.checkCommentOwnership = function(req, res, next) {
   if (req.isAuthenticated()) {
     Comment.findById(req.params.comment_id, function(err, found) {
-      if (err) {
-        req.flash("error", "Something unexpected happened!!");
-        res.redirect("back");
+      if (err || !found) {
+        req.flash("warning", "Comment no longer exists!!");
+        res.redirect("/campgrounds");
       } else {
         if (found.author.id.equals(req.user._id) || req.user.isAdmin) {
           //found.author.id is a mongoose object and other one is a string

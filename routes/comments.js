@@ -44,15 +44,21 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(
   req,
   res
 ) {
-  Comment.findById(req.params.comment_id, function(err, foundComment) {
-    if (err) {
-      res.redirect("back");
-    } else {
-      res.render("comment/edit", {
-        campground_id: req.params.id,
-        comment: foundComment
-      });
+  Campground.findById(req.params.id, function(err, foundCampground) {
+    if (err || !foundCampground) {
+      req.flash("warning", "Campground doesn't exist anymore!!");
+      return res.redirect("/campgrounds");
     }
+    Comment.findById(req.params.comment_id, function(err, foundComment) {
+      if (err) {
+        res.redirect("back");
+      } else {
+        res.render("comment/edit", {
+          campground_id: req.params.id,
+          comment: foundComment
+        });
+      }
+    });
   });
 });
 
@@ -65,7 +71,7 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(
     err,
     updatedComment
   ) {
-    if (err) {
+    if (err || !foundCampground) {
       res.redirect("back");
     } else {
       req.flash("info", "Comment updated");

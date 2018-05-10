@@ -78,8 +78,11 @@ router.get("/:id", function(req, res) {
   Campground.findById(req.params.id)
     .populate("comments")
     .exec(function(err, foundCamp) {
-      if (err) console.log(err);
-      else {
+      if (err || !foundCamp) {
+        console.log(err);
+        req.flash("error", "Please don't change Campground id!");
+        res.redirect("/campgrounds");
+      } else {
         console.log(foundCamp);
         res.render("campground/show", { campground: foundCamp });
       }
