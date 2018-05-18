@@ -5,5 +5,5 @@
 - Live Website: https://glacial-everglades-51001.herokuapp.com/
 ## Edit:
 - Google Maps added!!
-[alt text](https://www.jqueryscript.net/images/Show-Nearby-Places-jQuery-Google-Maps-WhatsNearby.jpg "Logo Title Text 1")
+[alt text](https://s3.ap-southeast-1.amazonaws.com/images.deccanchronicle.com/dc-Cover-3tb3aqjn2n3g90p8bn3kdf6f74-20171210112222.Medi.jpeg "Logo Title Text 1")
 
