@@ -71,7 +71,7 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(
     err,
     updatedComment
   ) {
-    if (err || !foundCampground) {
+    if (err) {
       res.redirect("back");
     } else {
       req.flash("info", "Comment updated");
