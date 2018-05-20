@@ -5,8 +5,9 @@
                 <p class="lead">YelpCamp
                 </p>
                 <div class="list-group">
-                    <li class="list-group-item active">Category 1</li>
-                    <li class="list-group-item">Category 2</li>
+                    <li class="list-group-item active">Basic Information</li>
+                    <li class="list-group-item">
+                        <%= campground.name %> Gallery</li>
                     <li class="list-group-item">Category 3</li>
                 </div>
                 <div id="map" style="height: 400px;
@@ -26,15 +27,18 @@
                                 <%= campground.name %>
                             </a>
                         </h4>
-                        <p>
+                        <p style='white-space:pre-line; text-align: left'>
                             <%= campground.description %>
                         </p>
-                        <p>
-                            Submitted By
+                        <p>Submitted By
                             <em>
                                 <%= campground.author.username%>
                             </em>
+                            <span class="pull-right">
+                                <%= moment(campground.createdAt).fromNow() %>
+                            </span>
                         </p>
+
                         <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){  %>
                             <a class="btn btn-sm btn-info" href="/campgrounds/<%= campground._id%>/edit">Edit</a>
                             <form id="delete-form" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
@@ -44,11 +48,18 @@
                     </div>
 
                 </div>
-                <div class="well">
+                <div class="well" style="background: rgb(239,239,239)">
                     <div class="text-right">
-                        <a class="btn btn-sm btn-success" href="/campgrounds/<%=campground._id%>/comments/new">Add new comment</a>
+                        <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
+                            <input class="btn btn-sm btn-warning" type="submit" value="Add a new comment">
+                            <hr>
+                            <textarea style=" max-width: 100%; min-width: 100%; min-height: 40px; rows: 2;" class="form-control" type="text" name="comment[text]"
+                                placeholder="Add your comment"></textarea>
+                            <hr>
+                        </form>
                     </div>
-                    <hr>
+
+
                     <% campground.comments.forEach(function(comment){ %>
                         <div class="row">
                             <div class="col-md-12">
@@ -58,7 +69,7 @@
                                 <span class="pull-right">
                                     <%= moment(comment.createdAt).fromNow() %>
                                 </span>
-                                <p>
+                                <p style="word-wrap: break-word;">
                                     <%= comment.text %>
                                 </p>
                                 <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){  %>
