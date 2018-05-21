@@ -11,7 +11,12 @@
                     <li class="list-group-item">Category 3</li>
                 </div>
                 <div id="map" style="height: 400px;
-                width: 100%;"></div>
+                width: 100%; border-bottom: 1px solid black;"></div>
+                <div class="list-group">
+                    <li style="border-top: 0; text-align: center;" class="list-group-item list-group-item-info">
+                        <%= campground.location %>
+                    </li>
+                </div>
                 <div style="margin-top: 5%" class="list-group">
                     <a class="list-group-item" href="/campgrounds">Back to all Campgrounds</a>
                 </div>
@@ -27,7 +32,7 @@
                                 <%= campground.name %>
                             </a>
                         </h4>
-                        <p style='white-space:pre-line; text-align: left'>
+                        <p style='white-space:pre-line;'>
                             <%= campground.description %>
                         </p>
                         <p>Submitted By
@@ -53,8 +58,7 @@
                         <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
                             <input class="btn btn-sm btn-warning" type="submit" value="Add a new comment">
                             <hr>
-                            <textarea style=" max-width: 100%; min-width: 100%; min-height: 40px; rows: 2;" class="form-control" type="text" name="comment[text]"
-                                placeholder="Add your comment"></textarea>
+                            <textarea maxlength="60" rows="2" style=" resize: none" class="form-control" type="text" name="comment[text]" placeholder="Add your comment"></textarea>
                             <hr>
                         </form>
                     </div>
@@ -112,6 +116,15 @@
                 infowindow.open(map, marker);
             });
         }
+    </script>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script>
+        $('textarea').each(function () {
+            this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;line-height: 1.5;overflow-y:hidden;resize: none');
+        }).on('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE1Wb7dyQk5DrwfPwb5-_nLob8xg6D228&callback=initMap"></script>
 

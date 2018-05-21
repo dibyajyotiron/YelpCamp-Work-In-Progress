@@ -14,6 +14,9 @@
     height: 63%;
   }
 }
+/* textarea.form-control {
+  background: rgb(235, 235, 235);
+} */
 
 .thumbnail .caption-full {
   padding: 9px;
@@ -51,6 +54,7 @@ i.fas.fa-info-circle {
     width: 35%;
   }
 }
+
 @media (min-width: 992px) {
   .input-group {
     margin-left: 0%;
@@ -132,4 +136,13 @@ nav.navbar.navbar-default {
 }
 .row {
   margin-top: 2%;
+}
+.navbar-default .navbar-nav > li > a:hover {
+  font-size: 14px;
+  transition: 1.5s ease;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  transition: 0.2s ease-in-out;
+  color: black;
 }

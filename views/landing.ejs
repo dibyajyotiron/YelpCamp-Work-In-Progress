@@ -17,10 +17,13 @@
   </div>
   </div>
   <div id="landing-header">
-
-    <h1>YelpCamp</h1>
-    <h3>Start planning your next trip today</h3>
-    <hr>
+    <h1 class="ml12">YelpCamp</h1>
+    <h2 class="ml14">
+      <span class="text-wrapper">
+        <span class="letters">Start planning your next trip today</span>
+        <span class="line"></span>
+      </span>
+    </h2>
     <a href="/campgrounds" class="btn btn-default btn-lg">
       <i class="fa fa-tree"></i> Visit Campsites!</a>
 
@@ -38,7 +41,67 @@
     <li></li>
   </ul>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $('.ml12').each(function () {
+      $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+    });
+
+    anime.timeline({ loop: true })
+      .add({
+        targets: '.ml12 .letter',
+        translateX: [40, 0],
+        translateZ: 0,
+        opacity: [0, 1],
+        easing: "easeOutExpo",
+        duration: 1200,
+        delay: function (el, i) {
+          return 500 + 30 * i;
+        }
+      }).add({
+        targets: '.ml12 .letter',
+        translateX: [0, -30],
+        opacity: [1, 0],
+        easing: "easeInExpo",
+        duration: 1100,
+        rotate: 540,
+        delay: function (el, i) {
+          return 100 + 30 * i;
+        }
+      });
+    // Wrap every letter in a span
+    $('.ml14 .letters').each(function () {
+      $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+    });
+
+    anime.timeline({ loop: true })
+      .add({
+        targets: '.ml14 .line',
+        scaleX: [0, 1],
+        opacity: [0.5, 1],
+        easing: "easeInOutExpo",
+        duration: 900
+      }).add({
+
+        targets: '.ml14 .letter',
+        opacity: [0, 1],
+
+        easing: "easeOutExpo",
+        duration: 800,
+        offset: '-=600',
+        delay: function (el, i) {
+          return 150 + 25 * i;
+        }
+      }).add({
+        targets: '.ml14',
+        opacity: 0,
+        duration: 1000,
+        easing: "easeOutExpo",
+        delay: 350
+      });
+  </script>
 </body>
 
 </html>

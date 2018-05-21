@@ -22,8 +22,7 @@
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea class="form-control" style="max-width: 100%; min-width: 100%; min-height: 150px;" type="text" id="description"
-              name="camp[description]">
+            <textarea class="form-control" type="text" id="description" name="camp[description]">
               <%= campground.description%>
             </textarea>
           </div>
@@ -37,12 +36,17 @@
         </form>
         <a href="/campgrounds">Go back to campgrounds</a>
       </div>
-
-
     </div>
-
   </div>
 
 
-
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script>
+    $('textarea').each(function () {
+      this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;line-height: 1.5;overflow-y:hidden;resize: none');
+    }).on('input', function () {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
+  </script>
   <% include ../partials/footer %>
