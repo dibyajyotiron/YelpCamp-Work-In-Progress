@@ -4,6 +4,7 @@
 - Will be adding various different modules to this website including ~~google maps api~~, review system and much more.
 - Live Website: https://glacial-everglades-51001.herokuapp.com/
 ## Edit:
-- Google Maps added!
-![alt text](https://www.jqueryscript.net/images/Show-Nearby-Places-jQuery-Google-Maps-WhatsNearby.jpg "Logo Title Text 1")
 
+ ![alt text](https://www.jqueryscript.net/images/Show-Nearby-Places-jQuery-Google-Maps-WhatsNearby.jpg "Logo Title Text 1")
+
+- Google Maps added!
