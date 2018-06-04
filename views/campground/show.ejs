@@ -2,8 +2,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <p class="lead">YelpCamp
-                </p>
+                <a class="btn " href="/campgrounds">
+                    <p class="lead">YelpCamp
+                    </p>
+                </a>
                 <div class="list-group">
                     <li class="list-group-item active">Basic Information</li>
                     <li class="list-group-item">
@@ -36,9 +38,11 @@
                             <%= campground.description %>
                         </p>
                         <p>Submitted By
-                            <em>
-                                <%= campground.author.username%>
-                            </em>
+                            <a href="/user/<%= campground.author.id%>">
+                                <em>
+                                    <%= campground.author.username%>
+                                </em>
+                            </a>
                             <span class="pull-right">
                                 <%= moment(campground.createdAt).fromNow() %>
                             </span>
