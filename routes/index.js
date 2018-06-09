@@ -4,6 +4,7 @@ var passport = require("passport");
 var User = require("../models/user");
 var Campground = require("../models/campgrounds");
 var Comments = require("../models/comment");
+var middleware = require("../middleware/index");
 //root route
 router.get("/", function(req, res) {
   res.render("landing");
@@ -65,25 +66,55 @@ router.get("/logout", function(req, res) {
 //user profile route
 router.get("/user/:id", function(req, res) {
   User.findById(req.params.id, function(err, foundUser) {
-    if (err) {
-      req.flash("error", "Something went wrong!");
-      res.redirect("/");
-    }
-    Campground.find()
-      .where("author.id")
-      .equals(foundUser._id)
-      .exec(function(err, campgrounds) {
-        if (err) {
-          req.flash("error", "Something went wrong!");
-          return res.redirect("back");
-        }
-        console.log(foundUser._id);
-        //console.log(Campground.find().paths);
-        res.render("profiles/show", {
-          user: foundUser,
-          campgrounds: campgrounds
+    if (err || !foundUser) {
+      req.flash("error", "Don't change user id!");
+      res.redirect("/campgrounds");
+    } else {
+      Campground.find()
+        .where("author.id")
+        .equals(foundUser._id)
+        .exec(function(err, campgrounds) {
+          if (err || !campgrounds) {
+            req.flash("error", "Something went wrong!");
+            return res.redirect("/campgrounds");
+          }
+          console.log(foundUser._id);
+          //console.log(Campground.find().paths);
+          res.render("profiles/show", {
+            user: foundUser,
+            campgrounds: campgrounds
+          });
         });
-      });
+    }
   });
 });
+//Profile Edit Route
+router.get("/user/:id/edit", function(req, res) {
+  User.findById(req.params.id, function(err, found) {
+    if (err || !found) {
+      console.log(err);
+
+      res.redirect("/campgrounds");
+    } else {
+      res.render("../views/profiles/edit.ejs", { user: found });
+    }
+    //found.author.id is a mongoose object and other one is a string
+  });
+});
+
+//Profile  Update Route
+router.put("/user/:id", function(req, res) {
+  console.log(req.body);
+
+  User.findByIdAndUpdate(req.params.id, req.body, function(err, updated) {
+    if (err || !updated) {
+      console.log(err);
+      req.flash("error", "Something went wrong!");
+      res.redirect("/campgrounds");
+    } else {
+      res.redirect("/user/" + req.params.id);
+    }
+  });
+});
+
 module.exports = router;

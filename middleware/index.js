@@ -1,6 +1,6 @@
 var Campground = require("../models/campgrounds");
 var Comment = require("../models/comment");
-
+var User = require("../models/user");
 //middleware
 var middleObj = {};
 
@@ -37,7 +37,7 @@ middleObj.checkCommentOwnership = function(req, res, next) {
         req.flash("warning", "Comment no longer exists!!");
         res.redirect("/campgrounds");
       } else {
-        if (found.author.id.equals(req.user._id) || req.user.isAdmin) {
+        if (found.author.id.equals(req.user._id)) {
           //found.author.id is a mongoose object and other one is a string
           next();
         } else {
@@ -47,7 +47,7 @@ middleObj.checkCommentOwnership = function(req, res, next) {
       }
     });
   } else {
-    req.flash("warning", "You need to be logged in first to edit a comment!");
+    req.flash("warning", "You need to be logged in first to edit your bio!");
     res.redirect("back");
   }
 };
@@ -59,5 +59,24 @@ middleObj.isLoggedIn = function(req, res, next) {
   req.flash("error", "You've to login first to do this!");
   res.redirect("/login");
 };
+
+// middleObj.checkProfileOwnership = function(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     User.findById(req.params.id, function(err, found) {
+//       if (err || !found) {
+//         req.flash("warning", "The requested User doesn't exist anymore!!");
+//         res.redirect("/user/" + req.params.id);
+//       } else if (found.id === req.params._id) {
+//         next();
+//       } else {
+//         req.flash("warning", "You can only make changes to your profile!");
+//         res.redirect("/campgrounds/" + req.params.id);
+//       }
+//     });
+//   } else {
+//     req.flash("error", "You need to be logged in");
+//     res.redirect("/login");
+//   }
+// };
 
 module.exports = middleObj;

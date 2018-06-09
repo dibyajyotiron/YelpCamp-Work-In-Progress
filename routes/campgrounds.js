@@ -37,7 +37,7 @@ router.get("/", function(req, res) {
           notFound: notFound
         });
       }
-    });
+    }).sort("name");
   } else {
     Campground.find({}, function(err, allCamps) {
       if (err) {
@@ -48,7 +48,7 @@ router.get("/", function(req, res) {
           notFound: notFound
         });
       }
-    });
+    }).sort({ createdAt: "desc" });
   }
 });
 //CREATE ROUTE
@@ -106,6 +106,7 @@ router.get("/:id", function(req, res) {
         res.redirect("/campgrounds");
       } else {
         console.log(foundCamp);
+        console.log(foundCamp.createdAt);
         res.render("campground/show", { campground: foundCamp });
       }
     });
