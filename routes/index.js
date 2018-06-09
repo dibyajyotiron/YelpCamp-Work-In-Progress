@@ -93,7 +93,7 @@ router.get("/user/:id/edit", function(req, res) {
   User.findById(req.params.id, function(err, found) {
     if (err || !found) {
       console.log(err);
-
+      req.flash("error", "Don't tamper with the user id!");
       res.redirect("/campgrounds");
     } else {
       res.render("../views/profiles/edit.ejs", { user: found });
