@@ -8,3 +8,4 @@
 ![alt text](https://www.jqueryscript.net/images/Show-Nearby-Places-jQuery-Google-Maps-WhatsNearby.jpg "Logo Title Text 1")
 - Google Maps added!
 - User Profile added!!
+- Edit Profile along with Profile ownership middleware added!
