@@ -6,6 +6,22 @@
       transition: 0.3s;
       border-radius: 20px;
       font-family: arial;
+      border: 0px solid white
+    }
+
+    zoom {
+      padding: 50px;
+      background-color: green;
+      transition: transform .2s;
+      /* Animation */
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+    }
+
+    .zoom:hover {
+      transform: scale(1.05);
+      /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     }
 
     /* On mouse-over, add a deeper shadow */
@@ -25,7 +41,7 @@
     <div class="row">
 
       <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-        <div class="thumbnail card">
+        <div class="thumbnail card zoom">
           <img src="<%=user.avatar%>" alt="User Profile Picture" style="border:0px solid black; border-radius: 20px;">
         </div>
         <div class="caption">

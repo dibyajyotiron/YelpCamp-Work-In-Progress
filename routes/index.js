@@ -73,6 +73,7 @@ router.get("/user/:id", function(req, res) {
       Campground.find()
         .where("author.id")
         .equals(foundUser._id)
+        .sort({ createdAt: "desc" })
         .exec(function(err, campgrounds) {
           if (err || !campgrounds) {
             req.flash("error", "Something went wrong!");
