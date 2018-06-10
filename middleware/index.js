@@ -63,10 +63,13 @@ middleObj.isLoggedIn = function(req, res, next) {
 // middleObj.checkProfileOwnership = function(req, res, next) {
 //   if (req.isAuthenticated()) {
 //     User.findById(req.params.id, function(err, found) {
+//       console.log(req.params.id);
+//       console.log(found._id);
 //       if (err || !found) {
+//         console.log(found);
 //         req.flash("warning", "The requested User doesn't exist anymore!!");
-//         res.redirect("/user/" + req.params.id);
-//       } else if (found.id === req.params._id) {
+//         res.redirect("/campgrounds");
+//       } else if (found._id === req.params.id) {
 //         next();
 //       } else {
 //         req.flash("warning", "You can only make changes to your profile!");
@@ -78,5 +81,27 @@ middleObj.isLoggedIn = function(req, res, next) {
 //     res.redirect("/login");
 //   }
 // };
+middleObj.checkProfileOwnership = function(req, res, next) {
+  if (req.isAuthenticated()) {
+    User.findById(req.params.id, (err, foundUser) => {
+      console.log(req.params.id);
+      console.log(foundUser._id);
+      if (err || !foundUser) {
+        console.log(err);
+        req.flash("warning", "The requested User doesn't exist anymore!!");
+        res.redirect("/campgrounds");
+      } else if (foundUser._id.equals(req.user._id)) {
+        next();
+      } else {
+        req.flash("warning", "You can only make changes to your profile!");
+        res.redirect("/user/" + req.params.id);
+      }
+    });
+    //next();
+  } else {
+    req.flash("error", "You need to be logged in");
+    res.redirect("/login");
+  }
+};
 
 module.exports = middleObj;

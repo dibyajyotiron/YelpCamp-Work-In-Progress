@@ -67,7 +67,7 @@ router.get("/logout", function(req, res) {
 router.get("/user/:id", function(req, res) {
   User.findById(req.params.id, function(err, foundUser) {
     if (err || !foundUser) {
-      req.flash("error", "Don't change user id!");
+      req.flash("warning", "Don't change user id!");
       res.redirect("/campgrounds");
     } else {
       Campground.find()
@@ -78,7 +78,7 @@ router.get("/user/:id", function(req, res) {
             req.flash("error", "Something went wrong!");
             return res.redirect("/campgrounds");
           }
-          console.log(foundUser._id);
+          //console.log(foundUser._id);
           //console.log(Campground.find().paths);
           res.render("profiles/show", {
             user: foundUser,
@@ -89,22 +89,25 @@ router.get("/user/:id", function(req, res) {
   });
 });
 //Profile Edit Route
-router.get("/user/:id/edit", function(req, res) {
+router.get("/user/:id/edit", middleware.checkProfileOwnership, function(
+  req,
+  res
+) {
   User.findById(req.params.id, function(err, found) {
-    if (err || !found) {
-      console.log(err);
-      req.flash("error", "Don't tamper with the user id!");
-      res.redirect("/campgrounds");
-    } else {
-      res.render("../views/profiles/edit.ejs", { user: found });
-    }
+    // if (err || !found) {
+    //   // console.log(err);
+    //   // req.flash("error", "Don't tamper with the user id!");
+    //   res.redirect("/campgrounds");
+    // } else {
+    res.render("../views/profiles/edit.ejs", { user: found });
+    //}
     //found.author.id is a mongoose object and other one is a string
   });
 });
 
-//Profile  Update Route
-router.put("/user/:id", function(req, res) {
-  console.log(req.body);
+//Profile Update Route
+router.put("/user/:id", middleware.checkProfileOwnership, function(req, res) {
+  //console.log(req.body);
 
   User.findByIdAndUpdate(req.params.id, req.body, function(err, updated) {
     if (err || !updated) {
