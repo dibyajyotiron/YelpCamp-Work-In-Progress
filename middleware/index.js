@@ -84,8 +84,8 @@ middleObj.isLoggedIn = function(req, res, next) {
 middleObj.checkProfileOwnership = function(req, res, next) {
   if (req.isAuthenticated()) {
     User.findById(req.params.id, (err, foundUser) => {
-      console.log(req.params.id);
-      console.log(foundUser._id);
+      // console.log(req.params.id);
+      // console.log(foundUser._id);
       if (err || !foundUser) {
         console.log(err);
         req.flash("warning", "The requested User doesn't exist anymore!!");
