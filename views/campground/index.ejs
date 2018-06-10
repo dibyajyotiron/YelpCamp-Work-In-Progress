@@ -23,7 +23,7 @@
 
             <% if(notFound !== null){ %>
                 <div class="col-md-12">
-                    <h3 style="margin-bottom: 15px">
+                    <h3 style="margin-bottom: 15px; color: gray">
                         <%= notFound %>
                     </h3>
                     <a style="text-decoration: none; margin:20px;padding: 5px" href="/campgrounds">Back to campgrounds</a>
@@ -34,8 +34,8 @@
                         <div class="col-md-3 col-sm-4 col-xs-12">
                             <div class="thumbnail">
                                 <img src="<%= camp.image%>">
-                                <div class="caption">
-                                    <h4>
+                                <div class="caption capitalize" style=" text-transform: capitalize; ">
+                                    <h4 style="color: rgb(34, 105, 105)">
                                         <%= camp.name %>
                                     </h4>
                                 </div>
@@ -51,4 +51,13 @@
         </div>
     </div>
     </div>
+
+    <script>
+        var links = document.getElementsByClassName("capitalize");
+        for (var i = 0; i < links.length; i++) {
+            links[i].innerHTML = links[i].innerHTML.toLowerCase();
+        }
+    </script>
+
+
     <% include ../partials/footer %>
