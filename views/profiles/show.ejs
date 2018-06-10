@@ -45,7 +45,7 @@
           <img src="<%=user.avatar%>" alt="User Profile Picture" style="border:0px solid black; border-radius: 20px;">
         </div>
         <div class="caption">
-          <h2 style="font-weight: 100; text-transform: capitalize;overflow-wrap: break-word;">
+          <h2 style="font-weight: 100; text-transform: capitalize; overflow-wrap: break-word;">
             <%= user.firstName + " " +user.lastName%>
           </h2>
           <h3 style="color:gray;font-weight: 100; margin-top: 0">
@@ -97,9 +97,9 @@
               <div class="thumbnail">
                 <img src="<%= campground.image%>">
                 <div class="caption">
-                  <h6>
+                  <h5 class="capitalize" style="text-transform: capitalize">
                     <%= campground.name %>
-                  </h6>
+                  </h5>
                 </div>
                 <p>
                   <a href="/campgrounds/<%=campground.id%>" class="btn btn-default">More Info
@@ -117,5 +117,13 @@
       </div>
     </div>
   </div>
+
+  <script>
+    var links = document.getElementsByClassName("capitalize");
+    for (var i = 0; i < links.length; i++) {
+      links[i].innerHTML = links[i].innerHTML.toLowerCase();
+    }
+  </script>
+
 
   <% include ../partials/footer %>
