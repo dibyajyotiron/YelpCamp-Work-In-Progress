@@ -115,6 +115,7 @@ router.put("/user/:id", middleware.checkProfileOwnership, function(req, res) {
       req.flash("error", "Something went wrong!");
       res.redirect("/campgrounds");
     } else {
+      req.flash("info", "User Details Updated!");
       res.redirect("/user/" + req.params.id);
     }
   });
