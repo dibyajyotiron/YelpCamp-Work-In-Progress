@@ -1,0 +1,33 @@
+<% include ./partials/header %>
+  <style>
+    .form-control:focus {
+      border-color: #5caab8;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 247, 255, 0.6);
+    }
+
+    .has-error .form-control:focus {
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+  </style>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-8 col-sm-8 col-md-6 ">
+        <form action="/reset/<%= token %>" method="POST">
+          <legend>Reset Password</legend>
+          <div class="form-group">
+            <label for="password">New Password</label>
+            <input type="password" name="password" value="" placeholder="New password" autofocus="autofocus" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="confirm">Confirm Password</label>
+            <input type="password" name="confirm" value="" placeholder="Confirm password" class="form-control" />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default">Update Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <% include ./partials/footer %>

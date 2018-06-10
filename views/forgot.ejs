@@ -1,0 +1,30 @@
+<% include ./partials/header %>
+  <style>
+    .form-control:focus {
+      border-color: #5cb85c;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(30, 255, 0, 0.685);
+    }
+
+    .has-error .form-control:focus {
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+  </style>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-8 col-sm-8 col-md-6 ">
+        <form action="/forgot" method="POST">
+          <legend style="padding-bottom: 10px">Forgot Password</legend>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" required autofocus class="form-control">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-default" type="submit">
+              <i class="fas fa-unlock-alt"></i> Reset Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <% include ./partials/footer %>
