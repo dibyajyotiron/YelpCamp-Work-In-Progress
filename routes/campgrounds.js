@@ -22,33 +22,55 @@ function escapeRegex(text) {
 
 router.get("/", function(req, res) {
   var notFound = null;
+  var perPage = 8;
+  var pageQuery = parseInt(req.query.page);
+  var page = pageQuery ? pageQuery : 1;
   if (req.query.search) {
     const regex = new RegExp(escapeRegex(req.query.search), "gi"); //g is global, i is ignore case
-    Campground.find({ name: regex }, function(err, allCamps) {
-      if (err) {
-        console.log(err);
-      } else {
-        if (allCamps.length < 1) {
-          notFound =
-            "Sorry, we could not find any matching result!! Try something else!";
-        }
-        res.render("campground/index", {
-          camps: allCamps,
-          notFound: notFound
+    Campground.find({ name: regex })
+      .sort({ createdAt: "desc" })
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .exec(function(err, allCamps) {
+        Campground.count({ name: regex }).exec(function(err, count) {
+          if (err) {
+            console.log(err);
+            res.redirect("back");
+          } else {
+            if (allCamps.length < 1) {
+              notFound =
+                "Sorry, we could not find any matching result!! Try something else!";
+            }
+            res.render("campground/index", {
+              camps: allCamps,
+              notFound: notFound,
+              current: page,
+              pages: Math.ceil(count / perPage),
+              search: req.query.search
+            });
+          }
         });
-      }
-    }).sort("name");
+      });
   } else {
-    Campground.find({}, function(err, allCamps) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.render("campground/index", {
-          camps: allCamps,
-          notFound: notFound
+    Campground.find({})
+      .sort({ createdAt: "desc" })
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .exec(function(err, allCamps) {
+        Campground.count().exec(function(err, count) {
+          if (err) {
+            console.log(err);
+          } else {
+            res.render("campground/index", {
+              camps: allCamps,
+              current: page,
+              pages: Math.ceil(count / perPage),
+              notFound: notFound,
+              search: false
+            });
+          }
         });
-      }
-    }).sort({ createdAt: "desc" });
+      });
   }
 });
 //CREATE ROUTE

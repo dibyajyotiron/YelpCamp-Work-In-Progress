@@ -226,6 +226,10 @@ router.post("/reset/:token", function(req, res) {
 
 //user profile route
 router.get("/user/:id", function(req, res) {
+  var perPage = 8;
+  var pageQuery = parseInt(req.query.page);
+  var page = pageQuery ? pageQuery : 1;
+  var notFound = null;
   User.findById(req.params.id, function(err, foundUser) {
     if (err || !foundUser) {
       req.flash("warning", "Don't change user id!");
@@ -235,17 +239,55 @@ router.get("/user/:id", function(req, res) {
         .where("author.id")
         .equals(foundUser._id)
         .sort({ createdAt: "desc" })
+        .skip(perPage * page - perPage)
+        .limit(perPage)
         .exec(function(err, campgrounds) {
           if (err || !campgrounds) {
             req.flash("error", "Something went wrong!");
             return res.redirect("/campgrounds");
+          } else {
+            Campground.count()
+              .where("author.id")
+              .equals(foundUser._id)
+              .exec(function(err, count) {
+                if (err) {
+                  console.log(err);
+                  res.redirect("back");
+                } else {
+                  console.log(campgrounds.length);
+                  if (campgrounds.length === 0) {
+                    notFound = `You've reached the end of the results!
+                    ${
+                      foundUser.username
+                    } doesn't have any more offerings for you!`;
+                    console.log(notFound);
+                    res.render("profiles/show", {
+                      user: foundUser,
+                      campgrounds: campgrounds,
+                      current: page,
+                      pages: Math.ceil(count / perPage),
+                      search: false,
+                      notFound: notFound
+                    });
+                  } else {
+                    res.render("profiles/show", {
+                      user: foundUser,
+                      campgrounds: campgrounds,
+                      current: page,
+                      pages: Math.ceil(count / perPage),
+                      search: false,
+                      notFound: notFound
+                    });
+                  }
+                }
+                //console.log(foundUser._id);
+                //console.log(Campground.find().paths);
+                // res.render("profiles/show", {
+                //   user: foundUser,
+                //   campgrounds: campgrounds
+                // });
+              });
           }
-          //console.log(foundUser._id);
-          //console.log(Campground.find().paths);
-          res.render("profiles/show", {
-            user: foundUser,
-            campgrounds: campgrounds
-          });
         });
     }
   });
