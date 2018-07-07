@@ -1,8 +1,27 @@
 var Campground = require("../models/campgrounds");
 var Comment = require("../models/comment");
+var Rating = require("../models/rating");
 var User = require("../models/user");
 //middleware
 var middleObj = {};
+
+//Rating
+middleObj.checkRatingExists = function(req, res, next) {
+  Campground.findById(req.params.id)
+    .populate("ratings")
+    .exec(function(err, campground) {
+      if (err) {
+        console.log(err);
+      }
+      for (var i = 0; i < campground.ratings.length; i++) {
+        if (campground.ratings[i].author.id.equals(req.user._id)) {
+          req.flash("success", "You already rated this!");
+          return res.redirect("/campgrounds/" + campground._id);
+        }
+      }
+      next();
+    });
+};
 
 middleObj.checkCampOwnership = function(req, res, next) {
   if (req.isAuthenticated()) {

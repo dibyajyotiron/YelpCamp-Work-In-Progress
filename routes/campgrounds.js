@@ -121,15 +121,44 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
 router.get("/:id", function(req, res) {
   Campground.findById(req.params.id)
     .populate("comments")
+    .populate("ratings")
     .exec(function(err, foundCamp) {
       if (err || !foundCamp) {
         console.log(err);
         req.flash("error", "Please don't change Campground id!");
         res.redirect("/campgrounds");
       } else {
-        console.log(foundCamp);
-        console.log(foundCamp.createdAt);
-        res.render("campground/show", { campground: foundCamp });
+        if (foundCamp.ratings.length > 0) {
+          var ratings = [];
+          var length = foundCamp.ratings.length;
+
+          foundCamp.ratings.forEach(function(rating) {
+            ratings.push(rating.rating);
+          });
+          var rating = ratings.reduce(function(total, element) {
+            return total + element;
+          });
+          foundCamp.rating = rating / length;
+          foundCamp.save();
+          var count = foundCamp.ratings.length;
+          console.log(foundCamp.ratings.length);
+          res.render("campground/show", {
+            campground: foundCamp,
+            count: count
+          });
+        } else {
+          console.log("Ratings:", foundCamp.ratings);
+          console.log("Rating:", foundCamp.rating);
+
+          var count = 0;
+          //console.log(foundCamp);
+          console.log(foundCamp.createdAt);
+
+          res.render("campground/show", {
+            campground: foundCamp,
+            count: count
+          });
+        }
       }
     });
 });

@@ -22,7 +22,73 @@
                 <div style="margin-top: 5%" class="list-group">
                     <a class="list-group-item" href="/campgrounds">Back to all Campgrounds</a>
                 </div>
+                <form action="/campgrounds/<%= campground._id %>/ratings" method="POST">
+                    <div class="form-group">
+                        <div style="border-bottom: 5%">
+                            <p>
+                                <!-- <%= campground.ratings%> -->
+                                <strong style="text-decoration: underline">Current Average Rating:</strong>
+                                <em>
+                                    <% if(campground.rating){ %>
+                                        <strong>
+                                            <%= campground.rating.toFixed(2) %>
+                                        </strong>
+                                        with total
+                                        <strong>
+                                            <%= count %>
+                                        </strong>
+                                        <%    if(count && count >= 2) { %>
+                                            ratings!
+                                            <%   } else if(count && count===1)  { %>
+                                                rating!
+                                                <%    }  else { %>
+                                                    Not rated!
+                                                    <% } %>
+                                                        <%     } else{ %>
+                                                            <span>Not yet rated by our users!</span>
+                                                            <%    } %>
+                                </em>
+                            </p>
+                        </div>
+                        <label for="rating" style="text-decoration: underline">Leave a rating:</label>
+                        <fieldset class="starability-checkmark form-group" id="rating" style="margin-bottom: 0">
+                            <input type="radio" id="first-rate1" name="rating[rating]" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="rating[rating]" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="rating[rating]" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="rating[rating]" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="rating[rating]" value="5" />
+                            <label for="first-rate5" title="Amazing">5 star</label>
+                        </fieldset>
+                        <% for (var i = 0; i <campground.ratings.length; i++) { %>
+                            <%  if(campground.ratings.length){ %>
+                                <span>
+                                    <%  if(currentUser && campground.ratings[i].author.id.equals(currentUser._id) ){ %>
+                                        <%   if(campground.ratings[i].rating>=2){ %>
+                                            <i class="far fa-check-circle"></i> You've Previously Rated This Place With
+                                            <%= campground.ratings[i].rating %> stars!
+                                                <%   }else{ %>
+                                                    <i class="far fa-check-circle"></i> You've Previously Rated This Place With Only
+                                                    <%= campground.ratings[i].rating %> star!
+                                                        <%  } %>
+                                                            <%  } %>
+                                </span>
+                                <% } %>
+                                    <% } %>
+
+                                        <!-- <button class="btn btn-sm btn-default "> -->
+                                        <div style="margin-top: 5%">
+                                            <button class="bttn-jelly bttn-md" style="background: rgba(29,137, 252, 1); color: white; font-size: 15px">
+                                                Rate Campground!
+                                            </button>
+                                        </div>
+                    </div>
+                </form>
             </div>
+
             <div class="col-md-9">
                 <div class="thumbnail">
                     <img class="img-responsive" src="<%=campground.image%>" alt="camp">
@@ -47,24 +113,49 @@
                                 <%= moment(campground.createdAt).fromNow() %>
                             </span>
                         </p>
+                        <span class="pull-right">
+                            <span class="starability-result pull-right" data-rating="<%=campground.rating.toFixed(0)%>">
+                                <%= campground.rating.toFixed(0) %>
+                            </span>
+                        </span>
 
                         <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){  %>
                             <a class="btn btn-sm btn-info" href="/campgrounds/<%= campground._id%>/edit">Edit</a>
                             <form id="delete-form" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
                                 <button class="btn btn-sm btn-danger">Delete</button>
                             </form>
-                            <% } %>
+                            <% } else {%>
+                                <ul style="padding-left: 0">
+                                    <li class="btn btn-sm btn-info disabled">
+                                        <a style="text-decoration: none; color: white">
+                                            First
+                                        </a>
+                                    </li>
+                                    <li class="btn btn-sm btn-danger disabled">
+                                        <a style="text-decoration: none; color: white">
+                                            Edit
+                                        </a>
+                                    </li>
+                                </ul>
+                                <%    } %>
                     </div>
 
                 </div>
                 <div class="well" style="background: rgb(239,239,239)">
                     <div class="text-right">
                         <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
-                            <input class="btn btn-sm btn-warning" type="submit" value="Add a new comment">
+                            <input class="bttn-gradient bttn-sm" style="border: 0px solid black; background:rgb(16, 160, 136) ; color: rgb(255, 255, 255); font-size: 1em"
+                                type="submit" value="Add a new comment">
                             <hr>
+
+
                             <textarea maxlength="60" rows="2" style=" resize: none" class="form-control" type="text" name="comment[text]" placeholder="Add your comment"></textarea>
+
                             <hr>
+
+
                         </form>
+
                     </div>
 
 

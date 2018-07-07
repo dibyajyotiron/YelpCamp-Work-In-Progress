@@ -1,3 +1,6 @@
+.starability-basic {
+  min-height: 0;
+}
 .pagination > li.active > a {
   border: 1px solid rgb(49, 176, 213);
   background: rgb(49, 176, 213);

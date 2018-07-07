@@ -7,6 +7,7 @@ var express = require("express"),
   localStrategy = require("passport-local"),
   User = require("./models/user"),
   bodyParser = require("body-parser"),
+  ratingRoutes = require("./routes/ratings"),
   Campground = require("./models/campgrounds"),
   Comment = require("./models/comment"),
   seedDB = require("./seeds"),
@@ -29,6 +30,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
+
 app.locals.moment = require("moment");
 //seed the database
 //seedDB();
@@ -58,6 +60,7 @@ app.use(function(req, res, next) {
 app.use(indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
+app.use("/campgrounds/:id/ratings", ratingRoutes);
 app.listen(port, function() {
   console.log("YelpCamp server has started!!");
 });
