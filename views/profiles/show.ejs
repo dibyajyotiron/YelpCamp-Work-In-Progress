@@ -46,18 +46,35 @@
         </div>
         <div class="caption">
           <h2 style="font-weight: 100; text-transform: capitalize; overflow-wrap: break-word;">
-            <%= user.firstName + " " +user.lastName%>
+            <% if(user.firstName && user.lastName){ %>
+              <%= user.firstName + " " +user.lastName%>
+                <% }else if(user.firstName){ %>
+                  <%=user.firstName%>
+                    <% }else if(user.lastName){ %>
+                      <%=user.lastName%>
+                        <%  }else{ %>
+                          Name was not provided!
+                          <% } %>
+
           </h2>
           <h3 style="color:gray;font-weight: 100; margin-top: 0">
-            <%= user.username%>
+            <%= user.username %>
           </h3>
           <p>
             <a style="text-decoration: none; overflow-wrap: break-word;">
-              <%=user.email%>
+              <% if(user.email){ %>
+                <%=user.email%>
+                  <%  } else{ %>
+                    email@notprovidedby.user
+                    <%}%>
             </a>
           </p>
           <p>
-            <%=user.bio%>
+            <% if(user.bio){ %>
+              <%=user.bio%>
+                <% } else {%>
+                  Bio was not provided!
+                  <%}%>
           </p>
         </div>
         <%  if(currentUser && user.username == currentUser.username){ %>
