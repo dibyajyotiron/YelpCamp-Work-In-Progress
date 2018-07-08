@@ -9,7 +9,7 @@
           <span class="glyphicon glyphicon-tent"></span> Welcome to YelpCamp!</h1>
         <p>View our campgrounds from all over the world</p>
         <p>
-          <button class="bttn-jelly bttn-lg" style="background: rgba(0, 123, 255, 0.74); font-size: 20px; color: white">
+          <button class="bttn-jelly bttn-lg" style="background: rgba(26, 179, 133, 1); font-size: 20px; color: white">
             <a href='/campgrounds/new' style="text-decoration: none; color: white">
               <i class="fas fa-tree"></i> Add a campground</a>
           </button>
@@ -35,13 +35,13 @@
               <div class="thumbnail">
                 <img src="<%= camp.image%>">
                 <div class="caption capitalize" style=" text-transform: capitalize; ">
-                  <h4 style="color: rgb(34, 105, 105)">
+                  <h4 style="color: rgba(41, 40, 40,0.7)">
                     <%= camp.name %>
                   </h4>
                 </div>
                 <p>
-                  <a href="/campgrounds/<%= camp._id%>" class="btn btn-info">More Info
-                    <i class="fas fa-info-circle"></i>
+                  <a href="/campgrounds/<%= camp._id%>" class="bttn-jelly bttn-md" style="text-decoration: none;font-size: 15px;color: white;background: rgba(26, 179, 133, 0.91)">More Info
+                    <i class="fas fa-info-circle" style="color: white"></i>
                   </a>
                 </p>
               </div>

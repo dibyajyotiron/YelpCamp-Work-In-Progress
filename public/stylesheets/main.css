@@ -2,13 +2,13 @@
   min-height: 0;
 }
 .pagination > li.active > a {
-  border: 1px solid rgb(49, 176, 213);
-  background: rgb(49, 176, 213);
+  border: 1px solid rgba(26, 179, 133, 0.91);
+  background: rgba(26, 179, 133, 0.91);
   color: #fff;
 }
 .pager > li.active > a {
-  border: 1px solid rgb(49, 176, 213);
-  background: rgb(49, 176, 213);
+  border: 1px solid rgba(26, 179, 133, 0.91);
+  background: rgba(26, 179, 133, 0.91);
   color: #fff;
 }
 
@@ -25,7 +25,7 @@
 
 .pagination > li > a {
   z-index: 3;
-  color: #1cdde4;
+  color: rgba(26, 179, 133, 1);
 }
 .pager > li > a {
   z-index: 3;
@@ -34,14 +34,14 @@
 
 .pagination > li > a:hover {
   z-index: 3;
-  background: rgb(49, 176, 213);
-  border: 1px solid rgb(49, 176, 213);
+  background: rgba(26, 179, 133, 0.91);
+  border: 1px solid rgba(26, 179, 133, 0.91);
   color: white;
 }
 
 .pager > li > a:hover {
   z-index: 3;
-  background: rgb(49, 176, 213);
+  background: rgba(26, 179, 133, 0.91);
   /* border: 1px solid rgb(49, 176, 213); */
   color: white;
 }

@@ -36,12 +36,17 @@
                 <div class="col-sm-6 col-md-4">
                     <form action="/campgrounds" method="get" class="navbar-form">
                         <div class="input-group">
-                            <input type="text" name="search" placeholder="Search campgrounds" class="form-control">
-                            <div class="input-group-btn">
-                                <button class="btn btn-info" type="Submit">
-                                    <i class="glyphicon glyphicon-search"></i>
-                                </button>
-                            </div>
+                            <% if(search){ %>
+                                <input type="text" name="search" placeholder="Search campgrounds" value="<%=search%>" class="form-control">
+                                <% }else{ %>
+                                    <input type="text" name="search" placeholder="Search campgrounds" class="form-control">
+                                    <% } %>
+
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-info" type="Submit">
+                                                <i class="glyphicon glyphicon-search"></i>
+                                            </button>
+                                        </div>
                         </div>
                     </form>
                 </div>

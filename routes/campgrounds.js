@@ -115,7 +115,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 });
 //NEW ROUTE
 router.get("/new", middleware.isLoggedIn, function(req, res) {
-  res.render("campground/new");
+  res.render("campground/new", { search: req.query.search });
 });
 // SHOW ROUTE :  Shows info about a campground
 router.get("/:id", function(req, res) {
@@ -144,7 +144,8 @@ router.get("/:id", function(req, res) {
           console.log(foundCamp.ratings.length);
           res.render("campground/show", {
             campground: foundCamp,
-            count: count
+            count: count,
+            search: req.query.search
           });
         } else {
           console.log("Ratings:", foundCamp.ratings);
@@ -156,7 +157,8 @@ router.get("/:id", function(req, res) {
 
           res.render("campground/show", {
             campground: foundCamp,
-            count: count
+            count: count,
+            search: req.query.search
           });
         }
       }
@@ -168,7 +170,10 @@ router.get("/:id/edit", middleware.checkCampOwnership, function(req, res) {
   //check if user is logged in
   Campground.findById(req.params.id, function(err, found) {
     //found.author.id is a mongoose object and other one is a string
-    res.render("campground/edit", { campground: found });
+    res.render("campground/edit", {
+      campground: found,
+      search: req.query.search
+    });
   });
   //if logged in check if it was created by him
   //if not redirect to login

@@ -56,7 +56,7 @@ middleObj.checkCommentOwnership = function(req, res, next) {
         req.flash("warning", "Comment no longer exists!!");
         res.redirect("/campgrounds");
       } else {
-        if (found.author.id.equals(req.user._id)) {
+        if (found.author.id.equals(req.user._id) || req.user.isAdmin) {
           //found.author.id is a mongoose object and other one is a string
           next();
         } else {

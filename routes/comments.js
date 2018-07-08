@@ -53,9 +53,13 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(
       if (err) {
         res.redirect("back");
       } else {
+        console.log(
+          foundCampground._id + " " + req.params.id + " " + foundComment._id
+        );
         res.render("comment/edit", {
           campground_id: req.params.id,
-          comment: foundComment
+          comment: foundComment,
+          search: req.query.search
         });
       }
     });

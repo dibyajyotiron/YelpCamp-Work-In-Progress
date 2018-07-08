@@ -15,7 +15,7 @@ router.get("/", function(req, res) {
 
 // show register form
 router.get("/register", function(req, res) {
-  res.render("register");
+  res.render("register", { search: req.query.search });
 });
 
 //handle sign up logic
@@ -35,7 +35,7 @@ router.post("/register", function(req, res) {
     if (err) {
       console.log(err);
       req.flash("error", err.message);
-      return res.render("register");
+      return res.render("register", { search: req.query.search });
     }
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Hey " + user.username + ", Sign Up successful!");
@@ -46,7 +46,7 @@ router.post("/register", function(req, res) {
 
 //show login form
 router.get("/login", function(req, res) {
-  res.render("login");
+  res.render("login", { search: req.query.search });
 });
 
 //handling login logic
@@ -303,7 +303,10 @@ router.get("/user/:id/edit", middleware.checkProfileOwnership, function(
     //   // req.flash("error", "Don't tamper with the user id!");
     //   res.redirect("/campgrounds");
     // } else {
-    res.render("../views/profiles/edit.ejs", { user: found });
+    res.render("../views/profiles/edit.ejs", {
+      user: found,
+      search: req.query.search
+    });
     //}
     //found.author.id is a mongoose object and other one is a string
   });
