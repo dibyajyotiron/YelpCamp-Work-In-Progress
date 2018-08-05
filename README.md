@@ -7,7 +7,7 @@
 
 # Todo
 - [x] Google maps api
-- ![alt text](https://www.jqueryscript.net/images/Show-Nearby-Places-jQuery-Google-Maps-WhatsNearby.jpg "Logo Title Text 1")
+- [![alt text](https://www.jqueryscript.net/images/Show-Nearby-Places-jQuery-Google-Maps-WhatsNearby.jpg "Logo Title Text 1")]
 - [x] Search
 - [x] User Profiles
 - [x] Edit Profile along with Profile ownership middleware
