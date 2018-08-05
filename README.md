@@ -5,6 +5,13 @@
 - Live Website: https://glacial-everglades-51001.herokuapp.com/
 ## Edit:
 
+# Todo
+- [x] Google maps api
+- [x] Search
+- [x] Ading ratings
+- [x] Updating ratings
+- [x] Fixing bugs
+
 ![alt text](https://www.jqueryscript.net/images/Show-Nearby-Places-jQuery-Google-Maps-WhatsNearby.jpg "Logo Title Text 1")
 - Google Maps added!
 - User Profile added!!
