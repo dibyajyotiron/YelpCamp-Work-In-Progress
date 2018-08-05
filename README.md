@@ -7,13 +7,10 @@
 
 # Todo
 - [x] Google maps api
+- ![alt text](https://www.jqueryscript.net/images/Show-Nearby-Places-jQuery-Google-Maps-WhatsNearby.jpg "Logo Title Text 1")
 - [x] Search
+- [x] User Profiles
+- [x] Edit Profile along with Profile ownership middleware
 - [x] Ading ratings
-- [x] Updating ratings
-- [x] Fixing bugs
+- [ ] Updating ratings
 
-![alt text](https://www.jqueryscript.net/images/Show-Nearby-Places-jQuery-Google-Maps-WhatsNearby.jpg "Logo Title Text 1")
-- Google Maps added!
-- User Profile added!!
-- Edit Profile along with Profile ownership middleware added!
-- Review System Added!
