@@ -16,9 +16,21 @@ var express = require("express"),
   port = process.env.PORT || 3000;
 
 // mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect(
-  "mongodb://dibya_ww:12345@ds117010.mlab.com:17010/yelpcamp_dibya"
-);
+mongoose
+  .connect(process.env.mongoURI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  })
+  .then(() => {
+    console.log(process.env.mongoURI);
+    if (process.env.NODE_ENV !== "production")
+      return console.info(
+        "Connected database: " + `${process.env.mongoURI}...`
+      );
+    return console.info("connected to production environment of mongodb...");
+  })
+  .catch((ex) => console.error(`${ex.message}`));
 
 //require routes
 var commentRoutes = require("./routes/comments"),
@@ -40,7 +52,7 @@ app.use(
   require("express-session")({
     secret: "It is YelpCamp",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
   })
 );
 app.use(passport.initialize());
@@ -49,7 +61,7 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.currentUser = req.user;
   res.locals.error = req.flash("error");
   res.locals.success = req.flash("success");
@@ -61,6 +73,6 @@ app.use(indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds/:id/ratings", ratingRoutes);
-app.listen(port, function() {
+app.listen(port, function () {
   console.log("YelpCamp server has started!!");
 });
